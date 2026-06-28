@@ -1,0 +1,21 @@
+# dependencies
+backend/node_modules/
+web/node_modules/
+
+# build output
+backend/dist/
+web/dist/
+
+# test artifacts
+test-results/
+coverage/
+backend/.vitest/
+web/.vitest/
+backend/node_modules/.vite/
+web/node_modules/.vite/
+
+# local runtime data and secrets
+docs/verification/runtime-verification.json
+
+# macOS
+.DS_Store

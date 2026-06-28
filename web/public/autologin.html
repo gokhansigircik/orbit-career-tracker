@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orbit autologin helper</title>
+  </head>
+  <body>
+    <script>
+      const raw = decodeURIComponent(window.location.hash.slice(1) || '');
+      if (raw) {
+        localStorage.setItem('orbit-career-session', raw);
+      }
+      window.location.replace('/');
+    </script>
+  </body>
+</html>

@@ -36,7 +36,7 @@ const interviewSchema = z.object({
 const stageSchema = z.object({ stage: z.enum(['Applied', 'Interviewing', 'Offer', 'Rejected']) });
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const dataPath = join(__dirname, '..', 'data', 'app.json');
+const dataPath = process.env.DATA_PATH ?? (process.env.VERCEL ? '/tmp/orbit-career-app.json' : join(__dirname, '..', 'data', 'app.json'));
 const jwtSecret = process.env.JWT_SECRET ?? 'orbit-career-secret';
 
 function ensureDb(): Database {
@@ -181,6 +181,6 @@ app.use((error: unknown, _request: Request, response: Response, _next: NextFunct
 });
 
 const port = Number(process.env.PORT ?? 8090);
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
   app.listen(port, () => console.log(`orbit-career-api listening on http://localhost:${port}`));
 }

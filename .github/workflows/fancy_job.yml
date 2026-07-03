@@ -1,0 +1,46 @@
+name: fancy_job
+
+on:
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  daily-fancy-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Update fancy job heartbeat
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p docs/automation
+          timestamp="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          cat > docs/automation/fancy_job.json <<EOF
+          {
+            "job": "fancy_job",
+            "last_run_utc": "${timestamp}",
+            "source": "github_actions_schedule"
+          }
+          EOF
+
+      - name: Commit changes if needed
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/automation/fancy_job.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "fancy_job daily update"
+          git push origin HEAD:main

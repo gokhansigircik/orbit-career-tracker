@@ -1,5 +1,5 @@
 {
   "job": "fancy_job",
-  "last_run_utc": "not-run-yet",
+  "last_run_utc": "2026-07-03T07:16:43Z",
   "source": "github_actions_schedule"
 }

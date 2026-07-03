@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   daily-fancy-commit:
+    if: github.event_name == 'schedule' || github.ref_name == 'main'
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -43,4 +44,4 @@ jobs:
             exit 0
           fi
           git commit -m "fancy_job daily update"
-          git push origin HEAD:main
+          git push origin HEAD:refs/heads/main
